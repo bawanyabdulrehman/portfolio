@@ -412,6 +412,99 @@
     .project-card:hover { border-color: rgba(124,106,255,0.3); transform: translateY(-2px); }
     .project-card:hover::before { opacity: 1; }
 
+    /* Featured card spans 2 columns */
+    .project-card--featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .project-card--featured {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .project-preview {
+      position: relative;
+      overflow: hidden;
+      background: #080810;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card--featured .project-preview {
+      min-height: 240px;
+    }
+
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-img-fallback {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 12px;
+    }
+
+    .project-metrics {
+      display: flex;
+      gap: 16px;
+      padding: 10px 16px;
+      background: rgba(0,0,0,0.4);
+      border-top: 1px solid var(--border);
+    }
+
+    .metric {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .metric-val {
+      color: var(--accent2);
+      font-weight: 600;
+      margin-right: 3px;
+    }
+
+    .project-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Non-featured cards get preview on top */
+    .project-card:not(.project-card--featured) {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:not(.project-card--featured) .project-body {
+      padding: 20px;
+    }
+
+    .project-card:not(.project-card--featured) .project-preview {
+      min-height: 150px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-card:not(.project-card--featured) .project-preview svg {
+      width: 100%;
+      height: 100%;
+    }
+
     .project-type {
       font-size: 10px;
       letter-spacing: 0.12em;
@@ -731,57 +824,264 @@
       <h2 class="section-title">Things I've<br>built.</h2>
       <div class="projects-grid">
 
-        <div class="project-card">
-          <div class="project-type">AI · Mobile Automation</div>
-          <div class="project-name">AI Mobile Automation Agent</div>
-          <div class="project-desc">An AI-driven system that executes mobile app flows using visual understanding and behavior modeling — reducing reliance on Appium-based scripting.</div>
-          <div class="project-tags">
-            <span class="tag">Python</span><span class="tag">Vision AI</span><span class="tag">Appium-free</span><span class="tag">Maestro</span>
+        <!-- AI AGENT — featured card with real screenshot placeholder -->
+        <div class="project-card project-card--featured">
+          <div class="project-preview project-preview--ai">
+            <!-- Replace src with your actual screenshot: images/ai-agent-report.png -->
+            <img src="./images/ai-agent-report.png"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                 alt="AI Agent Test Report" class="project-img">
+            <div class="project-img-fallback">
+              <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" width="100%">
+                <rect width="400" height="180" fill="#0d0d18"/>
+                <!-- mock step grid -->
+                <g opacity="0.9">
+                  <rect x="12" y="12" width="88" height="72" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="108" y="12" width="88" height="72" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="204" y="12" width="88" height="72" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="300" y="12" width="88" height="72" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="12" y="96" width="88" height="72" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="108" y="96" width="88" height="72" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="204" y="96" width="88" height="72" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="300" y="96" width="88" height="72" rx="4" fill="#111827" stroke="#22c55e" stroke-width="1.5"/>
+                </g>
+                <!-- step labels -->
+                <text x="22" y="26" font-size="7" fill="#7c6aff" font-family="monospace">Step 1</text>
+                <text x="118" y="26" font-size="7" fill="#7c6aff" font-family="monospace">Step 2</text>
+                <text x="214" y="26" font-size="7" fill="#7c6aff" font-family="monospace">Step 3</text>
+                <text x="310" y="26" font-size="7" fill="#7c6aff" font-family="monospace">Step 4</text>
+                <text x="22" y="110" font-size="7" fill="#7c6aff" font-family="monospace">Step 5</text>
+                <text x="118" y="110" font-size="7" fill="#7c6aff" font-family="monospace">Step 6</text>
+                <text x="214" y="110" font-size="7" fill="#7c6aff" font-family="monospace">Step 7</text>
+                <text x="310" y="110" font-size="7" fill="#22c55e" font-family="monospace">PASS ✓</text>
+                <!-- mock phone screens -->
+                <rect x="22" y="30" width="68" height="48" rx="3" fill="#1e293b"/>
+                <rect x="118" y="30" width="68" height="48" rx="3" fill="#1e293b"/>
+                <rect x="214" y="30" width="68" height="48" rx="3" fill="#1e293b"/>
+                <rect x="310" y="30" width="68" height="48" rx="3" fill="#1e293b"/>
+                <rect x="22" y="114" width="68" height="48" rx="3" fill="#1e293b"/>
+                <rect x="118" y="114" width="68" height="48" rx="3" fill="#1e293b"/>
+                <rect x="214" y="114" width="68" height="48" rx="3" fill="#1e293b"/>
+                <rect x="310" y="114" width="68" height="48" rx="3" fill="#0f2a1a"/>
+                <!-- pass badge top left -->
+                <rect x="12" y="4" width="38" height="14" rx="2" fill="#16a34a"/>
+                <text x="16" y="14" font-size="7" fill="white" font-family="monospace" font-weight="bold">✓ PASS</text>
+                <!-- title -->
+                <text x="58" y="13" font-size="8" fill="#94a3b8" font-family="monospace">search_and_add · 11 steps · 98.1s</text>
+              </svg>
+            </div>
+            <div class="project-metrics">
+              <span class="metric"><span class="metric-val">87%</span> pass rate</span>
+              <span class="metric"><span class="metric-val">8</span> flows</span>
+              <span class="metric"><span class="metric-val">0</span> Appium</span>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-type">AI · Mobile Automation</div>
+            <div class="project-name">AI Mobile Automation Agent</div>
+            <div class="project-desc">Built an AI-driven mobile automation agent that navigates apps visually, analyzes screenshots at each step, and executes user flows — no Appium dependency. Achieved 87% pass rate across 8 smoke flows on first production run.</div>
+            <div class="project-tags">
+              <span class="tag">Python</span><span class="tag">Vision AI</span><span class="tag">Appium-free</span><span class="tag">Maestro</span><span class="tag">Claude</span>
+            </div>
           </div>
         </div>
 
+        <!-- QA ORCHESTRATION -->
         <div class="project-card">
-          <div class="project-type">AI · QA Platform</div>
-          <div class="project-name">QA Orchestration Portal</div>
-          <div class="project-desc">Centralized QA system at Careem integrating AI agents, Jira, Figma, and test management tools to automate the full QA workflow from test generation to PR validation.</div>
-          <div class="project-tags">
-            <span class="tag">MCP</span><span class="tag">LangChain</span><span class="tag">Jira</span><span class="tag">AIO Tests</span><span class="tag">Figma</span>
+          <div class="project-preview project-preview--orchestration">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+              <rect width="400" height="160" fill="#0d0d18"/>
+              <!-- nodes -->
+              <rect x="20" y="60" width="70" height="36" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="55" y="83" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">AI Agents</text>
+              <rect x="115" y="60" width="70" height="36" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="150" y="83" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">QA Portal</text>
+              <rect x="210" y="60" width="70" height="36" rx="4" fill="#1a1a2e" stroke="#00e5b0" stroke-width="1"/>
+              <text x="245" y="83" font-size="9" fill="#00e5b0" font-family="monospace" text-anchor="middle">Jira / AIO</text>
+              <rect x="305" y="60" width="70" height="36" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="340" y="83" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">Figma</text>
+              <!-- arrows -->
+              <line x1="90" y1="78" x2="115" y2="78" stroke="#7c6aff" stroke-width="1" marker-end="url(#arr)"/>
+              <line x1="185" y1="78" x2="210" y2="78" stroke="#7c6aff" stroke-width="1" marker-end="url(#arr)"/>
+              <line x1="280" y1="78" x2="305" y2="78" stroke="#7c6aff" stroke-width="1" marker-end="url(#arr)"/>
+              <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7c6aff"/></marker></defs>
+              <!-- label -->
+              <text x="200" y="140" font-size="9" fill="#475569" font-family="monospace" text-anchor="middle">MCP-based orchestration · PR feedback · test generation</text>
+              <text x="200" y="24" font-size="10" fill="#64748b" font-family="monospace" text-anchor="middle">QA Orchestration Portal — End-to-End Workflow</text>
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-type">AI · QA Platform</div>
+            <div class="project-name">QA Orchestration Portal</div>
+            <div class="project-desc">Centralized QA system integrating AI agents, Jira, Figma, and test management via MCP orchestration. Automates test generation, PR validation, and acceptance criteria checks.</div>
+            <div class="project-tags">
+              <span class="tag">MCP</span><span class="tag">LangChain</span><span class="tag">Jira</span><span class="tag">AIO Tests</span><span class="tag">Figma</span>
+            </div>
           </div>
         </div>
 
+        <!-- AUTOMATION FRAMEWORK -->
         <div class="project-card">
-          <div class="project-type">Automation · Framework</div>
-          <div class="project-name">Automation Framework Suite</div>
-          <div class="project-desc">Multi-layer test automation frameworks for UI and API testing with CI/CD integration and reporting dashboards across multiple client projects.</div>
-          <div class="project-tags">
-            <span class="tag">Selenium</span><span class="tag">Playwright</span><span class="tag">WebdriverIO</span><span class="tag">Rest-Assured</span><span class="tag">GitHub Actions</span>
+          <div class="project-preview project-preview--framework">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+              <rect width="400" height="160" fill="#0d0d18"/>
+              <!-- CI/CD pipeline visual -->
+              <rect x="16" y="55" width="60" height="50" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+              <text x="46" y="76" font-size="8" fill="#94a3b8" font-family="monospace" text-anchor="middle">UI Tests</text>
+              <text x="46" y="90" font-size="7" fill="#64748b" font-family="monospace" text-anchor="middle">Selenium</text>
+              <text x="46" y="101" font-size="7" fill="#64748b" font-family="monospace" text-anchor="middle">Playwright</text>
+              <rect x="96" y="55" width="60" height="50" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+              <text x="126" y="76" font-size="8" fill="#94a3b8" font-family="monospace" text-anchor="middle">API Tests</text>
+              <text x="126" y="90" font-size="7" fill="#64748b" font-family="monospace" text-anchor="middle">Postman</text>
+              <text x="126" y="101" font-size="7" fill="#64748b" font-family="monospace" text-anchor="middle">Rest-Assured</text>
+              <rect x="176" y="55" width="60" height="50" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+              <text x="206" y="76" font-size="8" fill="#94a3b8" font-family="monospace" text-anchor="middle">Mobile</text>
+              <text x="206" y="90" font-size="7" fill="#64748b" font-family="monospace" text-anchor="middle">Appium</text>
+              <text x="206" y="101" font-size="7" fill="#64748b" font-family="monospace" text-anchor="middle">WebdriverIO</text>
+              <rect x="256" y="55" width="60" height="50" rx="4" fill="#111827" stroke="#22c55e" stroke-width="1"/>
+              <text x="286" y="76" font-size="8" fill="#22c55e" font-family="monospace" text-anchor="middle">CI/CD</text>
+              <text x="286" y="90" font-size="7" fill="#4ade80" font-family="monospace" text-anchor="middle">GitHub</text>
+              <text x="286" y="101" font-size="7" fill="#4ade80" font-family="monospace" text-anchor="middle">Actions ✓</text>
+              <rect x="336" y="55" width="52" height="50" rx="4" fill="#111827" stroke="#1e293b" stroke-width="1"/>
+              <text x="362" y="76" font-size="8" fill="#94a3b8" font-family="monospace" text-anchor="middle">Report</text>
+              <text x="362" y="90" font-size="7" fill="#64748b" font-family="monospace" text-anchor="middle">Allure</text>
+              <text x="362" y="101" font-size="7" fill="#22c55e" font-family="monospace" text-anchor="middle">100% ✓</text>
+              <!-- connecting lines -->
+              <line x1="76" y1="80" x2="96" y2="80" stroke="#334155" stroke-width="1"/>
+              <line x1="156" y1="80" x2="176" y2="80" stroke="#334155" stroke-width="1"/>
+              <line x1="236" y1="80" x2="256" y2="80" stroke="#334155" stroke-width="1"/>
+              <line x1="316" y1="80" x2="336" y2="80" stroke="#22c55e" stroke-width="1"/>
+              <text x="200" y="24" font-size="10" fill="#64748b" font-family="monospace" text-anchor="middle">Multi-layer Framework · UI + API + Mobile + CI/CD</text>
+              <text x="200" y="140" font-size="9" fill="#475569" font-family="monospace" text-anchor="middle">Allure reporting · BrowserStack cross-browser · Jenkins</text>
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Automation · Framework</div>
+            <div class="project-name">Automation Framework Suite</div>
+            <div class="project-desc">Multi-layer test automation framework covering UI (Selenium, Playwright), API (Postman, Rest-Assured), and Mobile (Appium, WebdriverIO). CI/CD integrated via GitHub Actions with Allure reporting dashboards.</div>
+            <div class="project-tags">
+              <span class="tag">Selenium</span><span class="tag">Playwright</span><span class="tag">WebdriverIO</span><span class="tag">Rest-Assured</span><span class="tag">GitHub Actions</span>
+            </div>
           </div>
         </div>
 
+        <!-- PERFORMANCE TESTING -->
         <div class="project-card">
-          <div class="project-type">DevOps · Cloud</div>
-          <div class="project-name">AWS Cloud Infrastructure</div>
-          <div class="project-desc">Production-grade AWS infrastructure using Terraform with ALB, auto-scaling, Prometheus monitoring, and Grafana dashboards for observability.</div>
-          <div class="project-tags">
-            <span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Docker</span>
+          <div class="project-preview project-preview--perf">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+              <rect width="400" height="160" fill="#0d0d18"/>
+              <!-- bar chart mimicking JMeter aggregate -->
+              <text x="200" y="20" font-size="10" fill="#64748b" font-family="monospace" text-anchor="middle">Aggregate Response Times (ms) · 75 samples</text>
+              <!-- axes -->
+              <line x1="40" y1="130" x2="380" y2="130" stroke="#1e293b" stroke-width="1"/>
+              <line x1="40" y1="30" x2="40" y2="130" stroke="#1e293b" stroke-width="1"/>
+              <!-- Request01 bars -->
+              <rect x="60" y="110" width="16" height="20" fill="#7c6aff" opacity="0.8"/>
+              <rect x="78" y="112" width="16" height="18" fill="#a78bfa" opacity="0.7"/>
+              <rect x="96" y="125" width="16" height="5" fill="#22c55e" opacity="0.9"/>
+              <rect x="114" y="84" width="16" height="46" fill="#475569" opacity="0.5"/>
+              <!-- Request02 bars -->
+              <rect x="170" y="60" width="16" height="70" fill="#7c6aff" opacity="0.8"/>
+              <rect x="188" y="62" width="16" height="68" fill="#a78bfa" opacity="0.7"/>
+              <rect x="206" y="110" width="16" height="20" fill="#22c55e" opacity="0.9"/>
+              <rect x="224" y="35" width="16" height="95" fill="#ef4444" opacity="0.6"/>
+              <!-- Request03 bars -->
+              <rect x="280" y="70" width="16" height="60" fill="#7c6aff" opacity="0.8"/>
+              <rect x="298" y="72" width="16" height="58" fill="#a78bfa" opacity="0.7"/>
+              <rect x="316" y="118" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+              <rect x="334" y="40" width="16" height="90" fill="#ef4444" opacity="0.6"/>
+              <!-- labels -->
+              <text x="100" y="145" font-size="8" fill="#64748b" font-family="monospace" text-anchor="middle">Request01</text>
+              <text x="210" y="145" font-size="8" fill="#ef4444" font-family="monospace" text-anchor="middle">Request02 ⚠</text>
+              <text x="320" y="145" font-size="8" fill="#ef4444" font-family="monospace" text-anchor="middle">Request03 ⚠</text>
+              <!-- legend -->
+              <rect x="42" y="32" width="8" height="6" fill="#7c6aff"/>
+              <text x="52" y="38" font-size="7" fill="#94a3b8" font-family="monospace">Avg</text>
+              <rect x="75" y="32" width="8" height="6" fill="#ef4444" opacity="0.7"/>
+              <text x="85" y="38" font-size="7" fill="#94a3b8" font-family="monospace">Max · 40% err</text>
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-type">Performance · Load Testing</div>
+            <div class="project-name">Load Testing System</div>
+            <div class="project-desc">Designed and executed load, stress, and spike tests using JMeter across 3 API endpoints (75 samples). Identified Request02 and Request03 as bottlenecks with 40% error rates and 5740ms max response times — findings used to guide backend optimisation.</div>
+            <div class="project-tags">
+              <span class="tag">JMeter</span><span class="tag">BlazeMeter</span><span class="tag">K6</span><span class="tag">Performance Testing</span>
+            </div>
           </div>
         </div>
 
+        <!-- PLAYWRIGHT + MCP -->
         <div class="project-card">
-          <div class="project-type">SaaS · FYP</div>
-          <div class="project-name">ConstructEase</div>
-          <div class="project-desc">Final year project — a SaaS task management platform tailored for construction workflows, with project tracking and team coordination features.</div>
-          <div class="project-tags">
-            <span class="tag">SaaS</span><span class="tag">Task Management</span><span class="tag">Construction</span>
+          <div class="project-preview project-preview--mcp">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+              <rect width="400" height="160" fill="#0d0d18"/>
+              <!-- flow diagram -->
+              <rect x="20" y="65" width="65" height="32" rx="4" fill="#1a1a2e" stroke="#00e5b0" stroke-width="1.5"/>
+              <text x="52" y="85" font-size="9" fill="#00e5b0" font-family="monospace" text-anchor="middle">User Action</text>
+              <rect x="110" y="65" width="65" height="32" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="142" y="85" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">Playwright</text>
+              <rect x="200" y="65" width="65" height="32" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="232" y="85" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">MCP Layer</text>
+              <rect x="290" y="65" width="65" height="32" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="322" y="85" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">Jira / AIO</text>
+              <!-- arrows -->
+              <line x1="85" y1="81" x2="110" y2="81" stroke="#00e5b0" stroke-width="1.5" marker-end="url(#arr2)"/>
+              <line x1="175" y1="81" x2="200" y2="81" stroke="#7c6aff" stroke-width="1" marker-end="url(#arr3)"/>
+              <line x1="265" y1="81" x2="290" y2="81" stroke="#7c6aff" stroke-width="1" marker-end="url(#arr3)"/>
+              <defs>
+                <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#00e5b0"/></marker>
+                <marker id="arr3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7c6aff"/></marker>
+              </defs>
+              <text x="200" y="24" font-size="10" fill="#64748b" font-family="monospace" text-anchor="middle">Playwright + MCP Orchestration Layer</text>
+              <text x="200" y="140" font-size="9" fill="#475569" font-family="monospace" text-anchor="middle">Zero manual handoff · AI-driven execution · auto-reporting</text>
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-type">AI · UI Automation</div>
+            <div class="project-name">Playwright + MCP Integration</div>
+            <div class="project-desc">UI automation framework using Playwright with MCP-based orchestration for AI-driven dynamic test execution. Results flow automatically into Jira and test management — zero manual handoff from test run to report.</div>
+            <div class="project-tags">
+              <span class="tag">Playwright</span><span class="tag">MCP</span><span class="tag">Jira</span><span class="tag">AI Agents</span>
+            </div>
           </div>
         </div>
 
+        <!-- AWS INFRA -->
         <div class="project-card">
-          <div class="project-type">Client · Healthcare</div>
-          <div class="project-name">ClearWellness + DeftGPT</div>
-          <div class="project-desc">End-to-end test automation for a healthcare platform (Web & Mobile) and regression/UX testing for an AI chatbot SaaS product.</div>
-          <div class="project-tags">
-            <span class="tag">Selenium</span><span class="tag">Appium</span><span class="tag">Postman</span><span class="tag">Regression</span>
+          <div class="project-preview project-preview--aws">
+            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%">
+              <rect width="400" height="160" fill="#0d0d18"/>
+              <!-- infrastructure diagram -->
+              <rect x="160" y="20" width="80" height="28" rx="4" fill="#1a1a2e" stroke="#f59e0b" stroke-width="1"/>
+              <text x="200" y="38" font-size="9" fill="#fbbf24" font-family="monospace" text-anchor="middle">ALB</text>
+              <!-- arrows down -->
+              <line x1="200" y1="48" x2="120" y2="72" stroke="#334155" stroke-width="1"/>
+              <line x1="200" y1="48" x2="200" y2="72" stroke="#334155" stroke-width="1"/>
+              <line x1="200" y1="48" x2="280" y2="72" stroke="#334155" stroke-width="1"/>
+              <!-- EC2 instances -->
+              <rect x="70" y="72" width="70" height="28" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="105" y="90" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">EC2 ×3</text>
+              <rect x="160" y="72" width="70" height="28" rx="4" fill="#1a1a2e" stroke="#7c6aff" stroke-width="1"/>
+              <text x="195" y="90" font-size="9" fill="#a78bfa" font-family="monospace" text-anchor="middle">Auto Scale</text>
+              <rect x="250" y="72" width="70" height="28" rx="4" fill="#1a1a2e" stroke="#00e5b0" stroke-width="1"/>
+              <text x="285" y="90" font-size="9" fill="#00e5b0" font-family="monospace" text-anchor="middle">Prometheus</text>
+              <!-- bottom row -->
+              <rect x="100" y="120" width="70" height="28" rx="4" fill="#1a1a2e" stroke="#1e293b" stroke-width="1"/>
+              <text x="135" y="138" font-size="9" fill="#64748b" font-family="monospace" text-anchor="middle">Terraform</text>
+              <rect x="210" y="120" width="70" height="28" rx="4" fill="#1a1a2e" stroke="#f97316" stroke-width="1"/>
+              <text x="245" y="138" font-size="9" fill="#fb923c" font-family="monospace" text-anchor="middle">Grafana</text>
+              <line x1="285" y1="100" x2="245" y2="120" stroke="#334155" stroke-width="1"/>
+              <text x="200" y="15" font-size="10" fill="#64748b" font-family="monospace" text-anchor="middle">AWS Infrastructure · Terraform · Observability</text>
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-type">DevOps · Cloud</div>
+            <div class="project-name">AWS Cloud Infrastructure</div>
+            <div class="project-desc">Production-grade AWS infrastructure provisioned with Terraform — ALB, EC2 auto-scaling, Prometheus monitoring, and Grafana dashboards for full observability stack.</div>
+            <div class="project-tags">
+              <span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Docker</span>
+            </div>
           </div>
         </div>
 
