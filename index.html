@@ -1,145 +1,943 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abdul Rehman | Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Enable dark mode toggle
-    tailwind.config = {
-      darkMode: 'class',
+  <title>Abdul Rehman | Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #16161f;
+      --border: #1e1e2e;
+      --accent: #7c6aff;
+      --accent2: #00e5b0;
+      --accent3: #ff6b6b;
+      --text: #e8e8f0;
+      --muted: #7070a0;
+      --card: #13131c;
     }
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
     }
-  </script>
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.35;
+    }
+
+    /* Ambient glow */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.12;
+    }
+    .glow-orb-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; left: -100px; animation: drift1 20s ease-in-out infinite; }
+    .glow-orb-2 { width: 500px; height: 500px; background: var(--accent2); bottom: 10%; right: -100px; animation: drift2 25s ease-in-out infinite; }
+
+    @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(60px,40px)} }
+    @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,60px)} }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.3px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-content { max-width: 750px; }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 28px;
+      padding: 6px 14px;
+      border: 1px solid rgba(0,229,176,0.2);
+      border-radius: 2px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent2);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -3px;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .accent { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 48px;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid var(--accent);
+    }
+    .btn-primary:hover { background: #6a58ee; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--muted); }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 40px;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      height: 1px;
+      width: 40px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 60px;
+      color: var(--text);
+    }
+
+    /* ABOUT */
+    #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 18px;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 4px;
+    }
+
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* EXPERIENCE */
+    #experience { background: var(--bg); }
+
+    .timeline { position: relative; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      opacity: 0.3;
+    }
+
+    .timeline-item {
+      padding-left: 36px;
+      padding-bottom: 56px;
+      position: relative;
+    }
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -4px; top: 8px;
+      width: 9px; height: 9px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+
+    .timeline-item.current .timeline-dot {
+      background: var(--accent2);
+      box-shadow: 0 0 12px var(--accent2);
+    }
+
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .timeline-company {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+
+    .timeline-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .badge-current { background: rgba(0,229,176,0.12); color: var(--accent2); border: 1px solid rgba(0,229,176,0.25); }
+    .badge-prev { background: rgba(124,106,255,0.1); color: var(--accent); border: 1px solid rgba(124,106,255,0.2); }
+
+    .timeline-role {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .timeline-date {
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-bottom: 20px;
+    }
+
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .timeline-bullets li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.7;
+    }
+
+    .timeline-bullets li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+
+    .timeline-bullets li strong { color: var(--text); font-weight: 500; }
+
+    /* PROJECTS */
+    #projects { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 28px;
+      border-radius: 4px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .project-card:hover { border-color: rgba(124,106,255,0.3); transform: translateY(-2px); }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-type {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .project-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 10px;
+      padding: 3px 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* SKILLS */
+    #skills { background: var(--bg); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-group {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 4px;
+    }
+
+    .skill-group-title {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 2px;
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+
+    .skill-pill:hover { color: var(--text); border-color: var(--accent); background: rgba(124,106,255,0.08); }
+
+    /* CONTACT */
+    #contact { background: var(--surface); border-top: 1px solid var(--border); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .contact-headline {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .contact-headline span { color: var(--accent); }
+
+    .contact-text { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 32px; }
+
+    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover { color: var(--text); border-color: rgba(124,106,255,0.4); background: rgba(124,106,255,0.05); }
+
+    .contact-link-icon {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(124,106,255,0.1);
+      border-radius: 4px;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .contact-link-text { flex: 1; }
+    .contact-link-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 2px; }
+    .contact-link-value { font-size: 13px; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 28px 40px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ANIMATIONS */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeIn 0.7s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in-1 { animation-delay: 0.1s; }
+    .fade-in-2 { animation-delay: 0.25s; }
+    .fade-in-3 { animation-delay: 0.4s; }
+    .fade-in-4 { animation-delay: 0.55s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section { padding: 72px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero h1 { letter-spacing: -2px; }
+    }
+  </style>
 </head>
-<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition duration-300">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-xl font-bold">Abdul Rehman</h1>
-      <nav class="space-x-6 text-sm">
-        <a href="#about" class="hover:text-blue-500">About</a>
-        <a href="#experience" class="hover:text-blue-500">Experience</a>
-        <a href="#projects" class="hover:text-blue-500">Projects</a>
-        <a href="#skills" class="hover:text-blue-500">Skills</a>
-        <a href="#contact" class="hover:text-blue-500">Contact</a>
-        <button onclick="toggleDarkMode()" class="ml-4 px-2 py-1 rounded border dark:border-gray-600 text-xs">Toggle Theme</button>
-      </nav>
-    </div>
-  </header>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
 
-  <!-- Hero -->
-  <section class="text-center py-24 bg-gradient-to-br from-blue-100 to-white dark:from-gray-800 dark:to-gray-900">
-    <h2 class="text-5xl font-extrabold mb-4">Abdul Rehman</h2>
-    <p class="text-xl text-gray-600 dark:text-gray-300">Test Automation Engineer & DevOps Enthusiast</p>
-  </section>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">AR<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-  <!-- About -->
-  <section id="about" class="py-16 px-6 max-w-3xl mx-auto text-center">
-    <h3 class="text-3xl font-semibold mb-6">About Me</h3>
-    <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-      I'm a detail-oriented engineer with hands-on experience in automated and manual testing, API validation, CI/CD pipelines, and cloud monitoring. I thrive in building scalable QA frameworks and integrating DevOps tools to ensure product quality and performance.
-    </p>
-  </section>
-
-  <!-- Experience -->
-  <section id="experience" class="py-16 px-6 max-w-5xl mx-auto">
-    <h3 class="text-3xl font-semibold mb-10 text-center">Experience</h3>
-
-    <div class="space-y-6">
-      <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded shadow">
-        <h4 class="text-xl font-bold">Co-Ventech — Test Automation Engineer</h4>
-        <p class="text-sm text-gray-500 mb-2">Jun 2024 – Present</p>
-        <ul class="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
-          <li>Developed automation frameworks for Web, Mobile, and APIs.</li>
-          <li>Created CI/CD pipelines using GitHub Actions and Jenkins.</li>
-          <li>Enhanced regression efficiency by 70% with Python and Selenium automation.</li>
-          <li>Visualized QA metrics with custom Jira dashboards.</li>
-        </ul>
-      </div>
-      <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded shadow">
-        <h4 class="text-xl font-bold">FAST NUCES — Teaching & Lab Assistant</h4>
-        <p class="text-sm text-gray-500 mb-2">2023 – 2024</p>
-        <ul class="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300">
-          <li>Guided students in Programming and Data Structures labs.</li>
-          <li>Reviewed and debugged student coding assignments.</li>
-        </ul>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-tag fade-in fade-in-1">Currently @ Careem · Karachi, PK</div>
+      <h1 class="fade-in fade-in-2">
+        Abdul<br><span class="accent">Rehman</span>
+      </h1>
+      <p class="hero-sub fade-in fade-in-3">
+        Software Engineer building scalable automation systems, AI-driven QA workflows, and cloud infrastructure. Turning quality engineering into a competitive advantage.
+      </p>
+      <div class="hero-cta fade-in fade-in-4">
+        <a href="#experience" class="btn btn-primary">View Experience</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Projects -->
-  <section id="projects" class="py-16 px-6 bg-gray-100 dark:bg-gray-800">
-    <div class="max-w-6xl mx-auto">
-      <h3 class="text-3xl font-semibold mb-10 text-center">Projects</h3>
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div class="bg-white dark:bg-gray-900 p-4 rounded shadow">
-          <h4 class="font-semibold text-lg">ClearWellness</h4>
-          <p class="text-sm">Test automation for healthcare platform (Web & Mobile).</p>
-          <a href="https://clearwellness.com" class="text-blue-500 text-xs">Visit Site</a>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Engineering quality<br>at scale.</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            I'm a <strong>Software Engineer</strong> specializing in automation, backend systems, and quality engineering. My work sits at the intersection of engineering rigor and AI-driven tooling — building systems that help teams ship faster without sacrificing reliability.
+          </p>
+          <p>
+            At <strong>Careem</strong>, I work on large-scale QA infrastructure including AI-powered test generation, mobile automation agents, and a centralized QA portal that orchestrates end-to-end quality workflows across the SuperApp.
+          </p>
+          <p>
+            I'm particularly interested in how <strong>AI and automation converge</strong> to eliminate manual bottlenecks in software delivery — from intelligent test generation to chaos engineering and observability.
+          </p>
         </div>
-        <div class="bg-white dark:bg-gray-900 p-4 rounded shadow">
-          <h4 class="font-semibold text-lg">DeftGPT</h4>
-          <p class="text-sm">Regression and UX testing for AI chatbot platform.</p>
-          <a href="https://deftgpt.com" class="text-blue-500 text-xs">Visit Site</a>
-        </div>
-        <div class="bg-white dark:bg-gray-900 p-4 rounded shadow">
-          <h4 class="font-semibold text-lg">CartPanda</h4>
-          <p class="text-sm">E-commerce flow automation using Selenium + JS.</p>
-          <a href="https://cartpanda.com" class="text-blue-500 text-xs">Visit Site</a>
-        </div>
-        <div class="bg-white dark:bg-gray-900 p-4 rounded shadow">
-          <h4 class="font-semibold text-lg">CCWeb</h4>
-          <p class="text-sm">Manual cross-browser QA for marketing site.</p>
-          <a href="https://clearcaptions.com" class="text-blue-500 text-xs">Visit Site</a>
-        </div>
-        <div class="bg-white dark:bg-gray-900 p-4 rounded shadow">
-          <h4 class="font-semibold text-lg">ConstructEase (FYP)</h4>
-          <p class="text-sm">SaaS task manager tailored for construction workflows.</p>
-        </div>
-        <div class="bg-white dark:bg-gray-900 p-4 rounded shadow">
-          <h4 class="font-semibold text-lg">DevOps Cloud Project</h4>
-          <p class="text-sm">AWS infra with Terraform, ALB, scaling, Prometheus & Grafana.</p>
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Years experience</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Tools & frameworks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">AI</div>
+            <div class="stat-label">Driven workflows</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">☁️</div>
+            <div class="stat-label">AWS & DevOps</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Skills -->
-  <section id="skills" class="py-16 px-6 bg-white dark:bg-gray-900">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-semibold mb-6 text-center">Technical Skills</h3>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-800 dark:text-gray-200">
-        <div><strong>Testing:</strong> Selenium, Appium, Postman, JMeter, Cucumber</div>
-        <div><strong>DevOps:</strong> Jenkins, GitHub Actions, Docker, Terraform, AWS</div>
-        <div><strong>Monitoring:</strong> Prometheus, Grafana</div>
-        <div><strong>Languages:</strong> Python, Java, JavaScript, SQL</div>
-        <div><strong>Tools:</strong> Jira, Git, MS Project</div>
-        <div><strong>Others:</strong> Agile, QA Audits, Risk Management</div>
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label">Experience</div>
+      <h2 class="section-title">Where I've<br>worked.</h2>
+      <div class="timeline">
+
+        <div class="timeline-item current">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">
+            <span class="timeline-company">Careem</span>
+            <span class="timeline-badge badge-current">Current</span>
+          </div>
+          <div class="timeline-role">Software Engineer — QA</div>
+          <div class="timeline-date">Oct 2025 – Present</div>
+          <ul class="timeline-bullets">
+            <li>Worked on <strong>IKIGAI</strong>, a Go-based service that processes user-reported issues from the SuperApp (Instabug), enabling automated Slack notifications and Jira ticket creation.</li>
+            <li>Contributed to a <strong>centralized QA Portal</strong> that orchestrates end-to-end quality workflows, hosting multiple AI-driven agents and integrations.</li>
+            <li>Built AI agents for <strong>automated test plan generation and test case creation</strong>, improving coverage and reducing manual effort.</li>
+            <li>Extended the portal with <strong>GenAI-powered PR feedback</strong>, enabling automated validation of acceptance criteria and test coverage during code reviews.</li>
+            <li>Integrated QA workflows with <strong>Jira, AIO, and Figma</strong> using MCP-based orchestration.</li>
+            <li>Performed <strong>load, chaos, and DDoS testing</strong> to validate system reliability under stress.</li>
+            <li>Built an <strong>AI-based mobile automation agent</strong> that navigates the app, analyzes screenshots, and generates test reports — eliminating Appium dependency.</li>
+            <li>Implemented mobile automation using <strong>Maestro and Sofy</strong> for cross-device reliability.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">
+            <span class="timeline-company">Co-Ventech</span>
+            <span class="timeline-badge badge-prev">Prev</span>
+          </div>
+          <div class="timeline-role">Test Automation Engineer</div>
+          <div class="timeline-date">Jun 2024 – Oct 2025</div>
+          <ul class="timeline-bullets">
+            <li>Built <strong>scalable automation frameworks</strong> using Selenium, Playwright, and WebdriverIO, reducing regression cycles.</li>
+            <li>Developed <strong>API automation suites</strong> using Rest-Assured and Postman for backend validation.</li>
+            <li>Provisioned <strong>AWS infrastructure using Terraform</strong> for consistent, repeatable deployments.</li>
+            <li>Integrated <strong>CI/CD pipelines</strong> using Jenkins and GitHub Actions.</li>
+            <li>Conducted <strong>performance testing</strong> using JMeter and BlazeMeter to identify system bottlenecks.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">
+            <span class="timeline-company">FAST-NUCES</span>
+          </div>
+          <div class="timeline-role">Student Lab Assistant — Data Structures</div>
+          <div class="timeline-date">Aug 2023 – Dec 2023</div>
+          <ul class="timeline-bullets">
+            <li>Conducted lab sessions and helped junior students understand complex data structure concepts.</li>
+            <li>Reviewed and debugged student coding assignments.</li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="py-16 px-6 max-w-3xl mx-auto text-center">
-    <h3 class="text-3xl font-semibold mb-4">Get in Touch</h3>
-    <p class="mb-6 text-gray-600 dark:text-gray-300">Reach out for collaborations or opportunities!</p>
-    <div class="space-y-2 text-sm">
-      <p><strong>Email:</strong> <a href="mailto:bawanyabdulrehman@gmail.com" class="text-blue-600">bawanyabdulrehman@gmail.com</a></p>
-      <p><strong>Phone:</strong> <a href="tel:+923113860984" class="text-blue-600">+92 311 3860984</a></p>
-      <p><strong>GitHub:</strong> <a href="https://github.com/bawanyabdulrehman" class="text-blue-600">github.com/bawanyabdulrehman</a></p>
-      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/abdulrehmanbawany" class="text-blue-600">linkedin.com/in/abdulrehmanbawany</a></p>
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title">Things I've<br>built.</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-type">AI · Mobile Automation</div>
+          <div class="project-name">AI Mobile Automation Agent</div>
+          <div class="project-desc">An AI-driven system that executes mobile app flows using visual understanding and behavior modeling — reducing reliance on Appium-based scripting.</div>
+          <div class="project-tags">
+            <span class="tag">Python</span><span class="tag">Vision AI</span><span class="tag">Appium-free</span><span class="tag">Maestro</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">AI · QA Platform</div>
+          <div class="project-name">QA Orchestration Portal</div>
+          <div class="project-desc">Centralized QA system at Careem integrating AI agents, Jira, Figma, and test management tools to automate the full QA workflow from test generation to PR validation.</div>
+          <div class="project-tags">
+            <span class="tag">MCP</span><span class="tag">LangChain</span><span class="tag">Jira</span><span class="tag">AIO Tests</span><span class="tag">Figma</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Automation · Framework</div>
+          <div class="project-name">Automation Framework Suite</div>
+          <div class="project-desc">Multi-layer test automation frameworks for UI and API testing with CI/CD integration and reporting dashboards across multiple client projects.</div>
+          <div class="project-tags">
+            <span class="tag">Selenium</span><span class="tag">Playwright</span><span class="tag">WebdriverIO</span><span class="tag">Rest-Assured</span><span class="tag">GitHub Actions</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">DevOps · Cloud</div>
+          <div class="project-name">AWS Cloud Infrastructure</div>
+          <div class="project-desc">Production-grade AWS infrastructure using Terraform with ALB, auto-scaling, Prometheus monitoring, and Grafana dashboards for observability.</div>
+          <div class="project-tags">
+            <span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Docker</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">SaaS · FYP</div>
+          <div class="project-name">ConstructEase</div>
+          <div class="project-desc">Final year project — a SaaS task management platform tailored for construction workflows, with project tracking and team coordination features.</div>
+          <div class="project-tags">
+            <span class="tag">SaaS</span><span class="tag">Task Management</span><span class="tag">Construction</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-type">Client · Healthcare</div>
+          <div class="project-name">ClearWellness + DeftGPT</div>
+          <div class="project-desc">End-to-end test automation for a healthcare platform (Web & Mobile) and regression/UX testing for an AI chatbot SaaS product.</div>
+          <div class="project-tags">
+            <span class="tag">Selenium</span><span class="tag">Appium</span><span class="tag">Postman</span><span class="tag">Regression</span>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="text-center py-6 text-sm text-gray-500 dark:text-gray-400">
-    &copy; 2025 Abdul Rehman. All rights reserved.
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">Skills</div>
+      <h2 class="section-title">Tech stack.</h2>
+      <div class="skills-grid">
+
+        <div class="skill-group">
+          <div class="skill-group-title">Languages</div>
+          <div class="skill-list">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">TypeScript</span>
+            <span class="skill-pill">Java</span>
+            <span class="skill-pill">SQL</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Automation</div>
+          <div class="skill-list">
+            <span class="skill-pill">Selenium</span>
+            <span class="skill-pill">Playwright</span>
+            <span class="skill-pill">WebdriverIO</span>
+            <span class="skill-pill">Appium</span>
+            <span class="skill-pill">Maestro</span>
+            <span class="skill-pill">Sofy</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">AI & Agents</div>
+          <div class="skill-list">
+            <span class="skill-pill">LangChain</span>
+            <span class="skill-pill">MCP</span>
+            <span class="skill-pill">RAG</span>
+            <span class="skill-pill">Prompt Engineering</span>
+            <span class="skill-pill">Claude Code</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">DevOps & Cloud</div>
+          <div class="skill-list">
+            <span class="skill-pill">AWS</span>
+            <span class="skill-pill">Terraform</span>
+            <span class="skill-pill">Docker</span>
+            <span class="skill-pill">Jenkins</span>
+            <span class="skill-pill">GitHub Actions</span>
+            <span class="skill-pill">CI/CD</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Performance & Observability</div>
+          <div class="skill-list">
+            <span class="skill-pill">JMeter</span>
+            <span class="skill-pill">BlazeMeter</span>
+            <span class="skill-pill">K6</span>
+            <span class="skill-pill">Prometheus</span>
+            <span class="skill-pill">Grafana</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Backend & APIs</div>
+          <div class="skill-list">
+            <span class="skill-pill">REST APIs</span>
+            <span class="skill-pill">Postman</span>
+            <span class="skill-pill">Rest-Assured</span>
+            <span class="skill-pill">Go (exposure)</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Tools & Process</div>
+          <div class="skill-list">
+            <span class="skill-pill">Jira</span>
+            <span class="skill-pill">AIO Tests</span>
+            <span class="skill-pill">Git</span>
+            <span class="skill-pill">Figma</span>
+            <span class="skill-pill">Agile</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-title">Concepts</div>
+          <div class="skill-list">
+            <span class="skill-pill">System Design</span>
+            <span class="skill-pill">Distributed Systems</span>
+            <span class="skill-pill">QA Strategy</span>
+            <span class="skill-pill">Chaos Engineering</span>
+            <span class="skill-pill">Scalability</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="section-label">Contact</div>
+          <h2 class="contact-headline">Let's build<br>something <span>great</span>.</h2>
+          <p class="contact-text">
+            Open to interesting engineering roles, collaborations, and conversations around automation, AI, and quality systems. Based in Karachi — working globally.
+          </p>
+          <a href="mailto:bawanyabdulrehman@gmail.com" class="btn btn-primary">Send an Email</a>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:bawanyabdulrehman@gmail.com" class="contact-link">
+            <div class="contact-link-icon">✉</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-value">bawanyabdulrehman@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/abdulrehmanbawany" target="_blank" class="contact-link">
+            <div class="contact-link-icon">in</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-value">abdulrehmanbawany</div>
+            </div>
+          </a>
+          <a href="https://github.com/bawanyabdulrehman" target="_blank" class="contact-link">
+            <div class="contact-link-icon">⌥</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">GitHub</div>
+              <div class="contact-link-value">bawanyabdulrehman</div>
+            </div>
+          </a>
+          <a href="tel:+923113860984" class="contact-link">
+            <div class="contact-link-icon">☎</div>
+            <div class="contact-link-text">
+              <div class="contact-link-label">Phone</div>
+              <div class="contact-link-value">+92 311 3860984</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Abdul Rehman · Built with precision.
   </footer>
 
 </body>
